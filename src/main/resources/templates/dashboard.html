@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>SafeBank - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+    <div class="container dashboard-container">
+        <div class="header">
+            <h3>Hola, <span th:text="${usuario.nombre}">Usuario</span></h3>
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="logout-btn">Cerrar Sesión</button>
+            </form>
+        </div>
+
+        <div class="balance-card">
+            <div>Tu Saldo Actual</div>
+            <div class="balance-amount" th:text="${'$ ' + usuario.saldo}">$ 0.00</div>
+        </div>
+
+        <div class="form-group">
+            <h3>Realizar Transferencia</h3>
+            <form id="transferForm">
+                <input type="hidden" id="emailOrigen" th:value="${usuario.email}">
+
+                <div class="form-group">
+                    <label for="emailDestino">Email del Destinatario</label>
+                    <input type="email" id="emailDestino" required placeholder="ejemplo@amigo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="monto">Monto a Transferir</label>
+                    <input type="number" id="monto" step="0.01" min="0.01" required placeholder="0.00">
+                </div>
+
+                <button type="submit">Transferir Dinero</button>
+            </form>
+        </div>
+
+        <h3>Historial de Transacciones</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Detalle</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="t : ${transacciones}">
+                    <td th:text="${#temporals.format(t.fecha, 'dd-MM-yyyy HH:mm')}">Fecha</td>
+                    <td th:text="${t.tipo}">Tipo</td>
+                    <td>
+                        <span th:if="${t.usuarioOrigen != null and t.usuarioOrigen.email == usuario.email}">
+                            Enviado a <span th:text="${t.usuarioDestino.email}">Destino</span>
+                        </span>
+                        <span th:if="${t.usuarioDestino.email == usuario.email}">
+                            Recibido de <span
+                                th:text="${t.usuarioOrigen != null ? t.usuarioOrigen.email : 'Sistema'}">Origen</span>
+                        </span>
+                    </td>
+                    <td th:text="${'$ ' + t.monto}"
+                        th:style="${t.usuarioDestino.email == usuario.email ? 'color: green; font-weight: bold;' : 'color: red; font-weight: bold;'}">
+                        Monto
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(transacciones)}">
+                    <td colspan="4" style="text-align: center;">No hay transacciones recientes</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('transferForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const data = {
+                emailOrigen: document.getElementById('emailOrigen').value,
+                emailDestino: document.getElementById('emailDestino').value,
+                monto: parseFloat(document.getElementById('monto').value)
+            };
+
+            if (!confirm(`¿Confirmas transferir $${data.monto} a ${data.emailDestino}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/transacciones/transferir', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('¡Transferencia realizada con éxito!');
+                    window.location.reload(); // Recargar para ver nuevo saldo
+                } else {
+                    const error = await response.json(); // Intentar leer JSON de error
+                    alert('Error: ' + (error.message || 'No se pudo realizar la transferencia'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de conexión');
+            }
+        });
+    </script>
+</body>
+
+</html>
