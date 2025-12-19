@@ -59,6 +59,44 @@ public class TransaccionService {
         return transaccionRepository.save(transaccion);
     }
 
+    // Realiza un depósito de dinero.
+    @Transactional
+    public Transaccion depositar(String email, BigDecimal monto) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El monto debe ser positivo");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setSaldo(usuario.getSaldo().add(monto));
+        usuarioRepository.save(usuario);
+
+        Transaccion transaccion = new Transaccion(monto, null, usuario, "DEPOSITO");
+        return transaccionRepository.save(transaccion);
+    }
+
+    // Realiza un retiro de dinero.
+    @Transactional
+    public Transaccion retirar(String email, BigDecimal monto) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("El monto debe ser positivo");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (usuario.getSaldo().compareTo(monto) < 0) {
+            throw new RuntimeException("Saldo insuficiente");
+        }
+
+        usuario.setSaldo(usuario.getSaldo().subtract(monto));
+        usuarioRepository.save(usuario);
+
+        Transaccion transaccion = new Transaccion(monto, usuario, null, "RETIRO");
+        return transaccionRepository.save(transaccion);
+    }
+
     // Obtiene el historial de transacciones de un usuario.
     public List<Transaccion> obtenerHistorial(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)

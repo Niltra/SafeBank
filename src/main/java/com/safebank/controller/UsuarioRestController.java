@@ -31,7 +31,8 @@ public class UsuarioRestController {
                 request.getNombre(),
                 request.getEmail(),
                 request.getPassword(),
-                BigDecimal.ZERO);
+                new BigDecimal("1000.00") // Bono de bienvenida
+        );
 
         Usuario usuarioGuardado = usuarioService.registrarUsuario(nuevoUsuario);
 
