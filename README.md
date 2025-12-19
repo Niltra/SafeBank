@@ -1,41 +1,41 @@
-# SafeBank 🏦
+# 🏦 SafeBank - Sistema Bancario Seguro
 
-SafeBank es una aplicación bancaria web segura y moderna desarrollada como proyecto de portafolio. Permite a los usuarios gestionar sus finanzas, realizar transferencias en tiempo real y llevar un control de sus movimientos.
 
-## 🚀 Características
+**SafeBank** es una aplicación web de banca online robusta y moderna, diseñada para demostrar la implementación de un sistema financiero seguro utilizando el ecosistema de Spring Boot. Este proyecto simula operaciones bancarias reales con un enfoque en la seguridad, la integridad de los datos y una experiencia de usuario fluida.
 
-*   **Gestión de Usuarios**: Registro seguro y autenticación (Login/Logout).
-*   **Bono de Bienvenida**: ¡Todos los nuevos usuarios reciben **$1000.00** al registrarse!
-*   **Operaciones Bancarias**:
-    *   **Depósitos**: Ingresa dinero a tu cuenta.
-    *   **Retiros**: Retira fondos cuando lo necesites.
-    *   **Transferencias**: Envía dinero a otros usuarios de SafeBank al instante.
-*   **Historial de Transacciones**: Visualiza todos tus movimientos con indicadores de color (Verde para ingresos, Rojo para egresos).
-*   **Seguridad**: Contraseñas encriptadas con BCrypt y protección de rutas.
-*   **API REST**: Backend robusto documentado con OpenAPI (Swagger).
 
-## 🛠️ Tecnologías Utilizadas
 
-*   **Java 17**: Lenguaje principal.
-*   **Spring Boot 3**: Framework para el backend.
-*   **Spring Security**: Gestión de autenticación y autorización.
-*   **Spring Data JPA**: Persistencia de datos.
-*   **H2 Database**: Base de datos en memoria (para desarrollo y pruebas rápidas).
-*   **Thymeleaf**: Motor de plantillas para el frontend.
-*   **HTML5 / CSS3 / JavaScript**: Interfaz de usuario moderna y responsiva.
-*   **Maven**: Gestión de dependencias.
+## 🚀 Características Principales
+
+*   **🔐 Autenticación Robusta**: Sistema de registro y login seguro utilizando Spring Security y BCrypt para el hashing de contraseñas.
+*   **💸 Operaciones en Tiempo Real**:
+    *   **Transferencias**: Envío de dinero instantáneo entre usuarios.
+    *   **Depósitos y Retiros**: Gestión de fondos con validaciones de saldo.
+*   **🎁 Bono de Bienvenida**: Sistema automático que otorga **$1,000.00** a cada nuevo usuario registrado.
+*   **📊 Dashboard Interactivo**: Visualización clara del saldo, número de cuenta (IBAN ficticio) e historial de transacciones.
+*   **🎨 UI Intuitiva**: Interfaz limpia y responsiva con indicadores visuales para ingresos (verde) y egresos (rojo).
+*   **📚 Documentación API**: Endpoints REST documentados automáticamente con OpenAPI (Swagger).
+
+## 🛠️ Stack Tecnológico
+
+*   **Backend**: Java 17, Spring Boot 3 (Web, Security, Data JPA, Validation).
+*   **Base de Datos**: H2 Database (In-Memory) para despliegue rápido y pruebas.
+*   **Frontend**: Thymeleaf, HTML5, CSS3, JavaScript (Vanilla).
+*   **Testing**: JUnit 5, Mockito.
+*   **Build Tool**: Maven.
 
 ## 📋 Requisitos Previos
 
-*   Java JDK 17 o superior.
-*   Maven 3.6 o superior.
+Para ejecutar este proyecto localmente necesitas:
+*   [Java JDK 17](https://www.oracle.com/java/technologies/downloads/) o superior.
+*   [Maven](https://maven.apache.org/) (opcional si usas el wrapper incluido).
 
-## ⚙️ Instalación y Ejecución
+## ⚙️ Instalación y Despliegue
 
-1.  **Clonar el repositorio** (o descargar el código):
+1.  **Clonar el repositorio**:
     ```bash
-    git clone (https://github.com/Niltra/SafeBank.git)
-    cd Proyecto_Contratacion
+    git clone (https://github.com/Niltra/SafeBank.git))
+    cd safebank
     ```
 
 2.  **Compilar y Ejecutar**:
@@ -43,31 +43,37 @@ SafeBank es una aplicación bancaria web segura y moderna desarrollada como proy
     mvn spring-boot:run
     ```
 
-3.  **Acceder a la aplicación**:
+3.  **Acceder a la Aplicación**:
     *   Abre tu navegador en: `http://localhost:8080`
+    *   Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-## 📖 Documentación de la API
+## 🧪 Credenciales de Prueba
 
-Puedes explorar y probar la API directamente a través de Swagger UI:
-*   URL: `http://localhost:8080/swagger-ui.html`
+Puedes registrar tus propios usuarios o usar estos si has cargado datos de prueba:
 
-## 🧪 Usuarios de Prueba
-
-Puedes registrar tus propios usuarios, o usar los siguientes si has ejecutado los scripts de prueba:
-*   **Usuario A**: `alice@test.com` / `pass123`
-*   **Usuario B**: `bob@test.com` / `pass123`
+| Rol | Email | Contraseña |
+| :--- | :--- | :--- |
+| **Usuario A** | `alice@test.com` | `pass123` |
+| **Usuario B** | `bob@test.com` | `pass123` |
 
 ## 📂 Estructura del Proyecto
 
+El código sigue una arquitectura en capas limpia y modular:
+
 ```
-src/main/java/com/safebank/
-├── config/       # Configuraciones (Seguridad, OpenAPI)
-├── controller/   # Controladores Web y REST
-├── dto/          # Objetos de Transferencia de Datos
-├── entity/       # Entidades JPA (Usuario, Transaccion)
-├── repository/   # Interfaces de Repositorio
-└── service/      # Lógica de Negocio
+com.safebank
+├── config/       # Configuración de Seguridad y Beans
+├── controller/   # Controladores MVC y REST
+├── dto/          # Data Transfer Objects (Request/Response)
+├── entity/       # Entidades JPA (Modelo de Datos)
+├── repository/   # Interfaces de Acceso a Datos (DAO)
+└── service/      # Lógica de Negocio y Transaccionalidad
 ```
 
+## 🤝 Contribución
+
+Las contribuciones son bienvenidas. Si tienes ideas para mejorar SafeBank, siéntete libre de abrir un issue o enviar un pull request.
+
 ---
-Desarrollado con ❤️ para demostración técnica.
+*Desarrollado con ❤️ como proyecto de portafolio profesional.*
+    
