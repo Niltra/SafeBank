@@ -34,7 +34,7 @@ SafeBank es una aplicación bancaria web segura y moderna desarrollada como proy
 
 1.  **Clonar el repositorio** (o descargar el código):
     ```bash
-    git clone <url-del-repositorio>
+    git clone (https://github.com/Niltra/SafeBank.git)
     cd Proyecto_Contratacion
     ```
 
